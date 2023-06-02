@@ -15,7 +15,15 @@ public class EjerciciosGuia7 {
         //ejercicio8();
         //ejercicio9();
         //ejercicio10();
-        ejercicio11();
+        //ejercicio11();
+        //ejercicio12();
+        //ejercicio13();
+        //ejercicio14();
+        //ejercicio15();
+        //ejercicio16();
+        //ejercicio17();
+        //ejercicio18();
+        //ejercicio19();
     }
 
     public static void ejercicio1() {
@@ -240,7 +248,7 @@ programa, caso contrario se vuelve a mostrar el menú.*/
                     System.out.println(numA + "x" + numB + "=" + multi);
                     break;
                 case 4:
-                    float dividir = (float)numA / numB;
+                    float dividir = (float) numA / numB;
                     System.out.println(numA + "/" + numB + "=" + dividir);
                     break;
                 case 5:
@@ -251,4 +259,244 @@ programa, caso contrario se vuelve a mostrar el menú.*/
             }
         } while (opcion != 5 || salir.equals("N"));
     }
+
+    public static void ejercicio12() {
+        /*Realizar un programa que simule el funcionamiento de un dispositivo RS232, este tipo de 
+dispositivo lee cadenas enviadas por el usuario. Las cadenas deben llegar con un formato 
+fijo: tienen que ser de un máximo de 5 caracteres de largo, el primer carácter tiene que ser 
+X y el último tiene que ser una O. 
+Las secuencias leídas que respeten el formato se consideran correctas, la secuencia 
+especial “&&&&&” marca el final de los envíos (llamémosla FDE), y toda secuencia distinta 
+de FDE, que no respete el formato se considera incorrecta. 
+Al finalizar el proceso, se imprime un informe indicando la cantidad de lecturas correctas e 
+incorrectas recibidas. Para resolver el ejercicio deberá investigar cómo se utilizan las 
+siguientes funciones de Java Substring(), Length(), equals().*/
+
+        Scanner leer = new Scanner(System.in);
+
+        System.out.println("Ingresa palabras con un máximo de 5 letras.");
+        System.out.println("El primer caracter tiene que ser X y el último una O.");
+        System.out.println("Para finalizar el procesos ingresa &&&&&");
+
+        String cadena;
+        int correctas = 0;
+        int incorrectas = 0;
+
+        do {
+            System.out.print(">");
+            cadena = leer.next().toUpperCase();
+            int largo = cadena.length();
+
+            if (cadena.equals("&&&&&")) {
+                break;
+            };
+
+            if (largo <= 5 && cadena.substring(0, 1).equals("X") && cadena.substring(largo - 1).equals("O")) {
+                correctas++;
+            } else {
+                incorrectas++;
+            }
+        } while (!cadena.equals("&&&&&"));
+
+        System.out.println("Lecturas correctas: " + correctas);
+        System.out.println("Lecturas incorrectas: " + incorrectas);
+
+    }
+
+    public static void ejercicio13() {
+        /*Dibujar un cuadrado de N elementos por lado utilizando el carácter “*”. Por ejemplo, si el 
+cuadrado tiene 4 elementos por lado se deberá dibujar lo siguiente:
+* * * * 
+*     *
+*     *
+* * * *
+         */
+        Scanner leer = new Scanner(System.in);
+        System.out.print(">");
+        int n = leer.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i == 0 || i == n - 1 || j == 0 || j == n - 1) {
+                    System.out.print("*");
+                } else {
+                    System.out.print(" ");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    public static void ejercicio14() {
+        /*Crea una aplicación que a través de una función nos convierta una cantidad de euros 
+introducida por teclado a otra moneda, estas pueden ser a dólares, yenes o libras. La 
+función tendrá como parámetros, la cantidad de euros y la moneda a converir que será 
+una cadena, este no devolverá ningún valor y mostrará un mensaje indicando el cambio 
+(void).
+El cambio de divisas es:
+ * 0.86 libras es un 1 €
+ * 1.28611 $ es un 1 €
+ * 129.852 yenes es un 1 €*/
+        Scanner leer = new Scanner(System.in);
+        float cantidad;
+        String tipoDeMoneda = "";
+
+        System.out.println("Ingresa la cantidad de euros a convertir:");
+        cantidad = leer.nextFloat();
+        System.out.println("Convertir a:");
+        System.out.println("1 Dólares");
+        System.out.println("2 Yenes");
+        System.out.println("3 Libras");
+        int opcion = leer.nextInt();
+
+        switch (opcion) {
+            case 1:
+                tipoDeMoneda = "dolares";
+                break;
+            case 2:
+                tipoDeMoneda = "yenes";
+                break;
+            case 3:
+                tipoDeMoneda = "libras";
+                break;
+            default:
+        }
+
+        convertir(cantidad, tipoDeMoneda);
+    }
+
+    public static void convertir(float cantidad, String tipoDeMoneda) {
+        double resultado;
+
+        switch (tipoDeMoneda) {
+            case "dolares":
+                resultado = cantidad * 1.28611;
+                System.out.println("Dólares: " + resultado);
+                break;
+            case "yenes":
+                resultado = cantidad * 129.852;
+                System.out.println("Yenes: " + resultado);
+                break;
+            case "libras":
+                resultado = cantidad * 0.86;
+                System.out.println("Libras: " + resultado);
+                break;
+            default:
+        }
+    }
+
+    public static void ejercicio15() {
+        /* Realizar un algoritmo que rellene un vector con los 100 primeros números enteros y los 
+muestre por pantalla en orden descendente.*/
+
+        int[] vector = new int[100];
+
+        for (int i = 1; i < vector.length; i++) {
+            vector[i] = i;
+            System.out.println(vector[i]);
+        }
+
+    }
+
+    public static void ejercicio16() {
+        /*Realizar un algoritmo que rellene un vector de tamaño N con valores aleatorios y le pida al 
+usuario un numero a buscar en el vector. El programa mostrará donde se encuentra el 
+numero y si se encuentra repetido*/
+        Scanner leer = new Scanner(System.in);
+
+        int N = 10;
+        int[] vector = new int[N];
+
+        for (int i = 0; i < vector.length; i++) {
+            vector[i] = (int) (Math.random() * 10);
+            System.out.print(vector[i] + " ");
+        }
+
+        System.out.println("\nIngresa un número para buscar en el vector:");
+        int numBuscar = leer.nextInt();
+        int contador = 0;
+
+        for (int i = 0; i < vector.length; i++) {
+            if (vector[i] == numBuscar) {
+                System.out.println("El número se encuentra en el índice " + "[" + i + "]");
+                contador++;
+            }
+        }
+        if (contador - 1 == 1) {
+            System.out.println("Se repite: " + (contador - 1) + " vez");
+        } else {
+            System.out.println("Se repite: " + (contador - 1) + " veces");
+        }
+
+    }
+
+    public static void ejercicio17() {
+        /*Recorrer un vector de N enteros contabilizando cuántos números son de 1 dígito, cuántos 
+de 2 dígitos, etcétera (hasta 5 dígitos).*/
+
+        int[] vector = {1, 10, 200, 3000, 40000};
+
+        for (int i = 0; i < vector.length; i++) {
+            int digitos = (int) (Math.log10(vector[i]) + 1);
+            /*En este código, se utiliza la función Math.log10(numero) para obtener 
+            el logaritmo en base 10 del número. Luego se le suma 1 y se convierte en entero (int) 
+            para obtener la cantidad de dígitos.*/
+            if (digitos <= 5) {
+                System.out.println("La cantidad de números de " + vector[i] + " es " + digitos);
+            }
+        }
+    }
+
+    public static void ejercicio18() {
+        /*Realizar un programa que rellene un matriz de 4 x 4 de valores aleatorios y muestre la 
+traspuesta de la matriz. La matriz traspuesta de una matriz A se denota por B y se obtiene 
+cambiando sus filas por columnas (o viceversa)*/
+        int[][] matriz = new int[4][4];
+
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz.length; j++) {
+                matriz[i][j] = (int) (Math.random() * 10);
+            }
+        }
+        System.out.println("Matriz A");
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz.length; j++) {
+                System.out.print(matriz[i][j] + " ");
+            }
+            System.out.println(" ");
+        }
+        System.out.println("Matriz B");
+        for (int j = 0; j < matriz.length; j++) {
+            for (int i = 0; i < matriz.length; i++) {
+                System.out.print(matriz[i][j] + " ");
+            }
+            System.out.println(" ");
+        }
+
+    }
+
+    public static void ejercicio19() {
+        /*Realice un programa que compruebe si una matriz dada es anti simétrica. Se dice que una 
+matriz A es anti simétrica cuando ésta es igual a su propia traspuesta, pero cambiada de 
+signo. Es decir, A es anti simétrica si A = -AT. La matriz traspuesta de una matriz A se 
+denota por AT y se obtiene cambiando sus filas por columnas (o viceversa*/
+
+        int[][] matriz = {{0, -2, 4}, {2, 0, 2}, {-4, -2, 0}};
+
+        boolean verificar = true;
+
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz.length; j++) {
+                if (matriz[i][j] != -matriz[j][i]) {
+                    verificar = false;
+                }
+            }
+        }
+        if (verificar) {
+            System.out.println("Es antisimetrico");
+        } else {
+            System.out.println("No es antisimétrico");
+        }
+    }
+
 }
