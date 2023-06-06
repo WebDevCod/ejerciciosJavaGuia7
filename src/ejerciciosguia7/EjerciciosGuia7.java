@@ -24,6 +24,8 @@ public class EjerciciosGuia7 {
         //ejercicio17();
         //ejercicio18();
         //ejercicio19();
+        //ejercicio20();
+        //ejercicio21();
     }
 
     public static void ejercicio1() {
@@ -497,6 +499,173 @@ denota por AT y se obtiene cambiando sus filas por columnas (o viceversa*/
         } else {
             System.out.println("No es antisimétrico");
         }
+    }
+
+    public static void ejercicio20() {
+        /*Un cuadrado mágico 3 x 3 es una matriz 3 x 3 formada por números del 1 al 9 donde la 
+suma de sus filas, sus columnas y sus diagonales son idénticas. Crear un programa que 
+permita introducir un cuadrado por teclado y determine si este cuadrado es mágico o no. 
+El programa deberá comprobar que los números introducidos son correctos, es decir, 
+están entre el 1 y el 9.*/
+
+        Scanner leer = new Scanner(System.in);
+        int valorN;
+        int N = 3;
+        int[][] matriz = new int[N][N];
+
+        //Bucle para llenar la matriz        
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz.length; j++) {
+                System.out.println("Ingresa un valor del 1 al 9 en las coordenas. " + i + "," + j + " :");
+                valorN = leer.nextInt();
+                while (valorN < 1 || valorN > 9) {
+                    System.out.println("Debes ingresar valores entre 1 y 9");
+                    valorN = leer.nextInt();
+                }
+                matriz[i][j] = valorN;
+            }
+
+        }
+
+        //Bucle para mostrar la matriz
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz.length; j++) {
+                System.out.print(matriz[i][j] + "|");
+            }
+            System.out.println(" ");
+        }
+
+        boolean bandera = true;
+        int suma = 0;
+
+        //Sumar filas
+        for (int i = 0; i < matriz.length; i++) {
+            int sumaFila = 0;
+            for (int j = 0; j < matriz.length; j++) {
+                sumaFila += matriz[i][j];
+            }
+            if (i == 0) {
+                suma = sumaFila;
+            } else if (sumaFila != suma) {
+                //Escribir "La matriz no es mágica"
+                bandera = false;
+            }
+        }
+
+        //Sumar columnas
+        for (int j = 0; j < matriz.length; j++) {
+            int sumaColumna = 0;
+            for (int i = 0; i < matriz.length; i++) {
+                sumaColumna += matriz[i][j];
+            }
+            if (sumaColumna != suma) {
+                //Escribir "La matriz no es mágica"
+                bandera = false;
+            }
+
+        }
+
+        //Sumar diagonales
+        int sumaDiagonalA = 0;
+        for (int i = 0; i < matriz.length; i++) {
+            sumaDiagonalA += matriz[i][i];
+        }
+        if (sumaDiagonalA != suma) {
+            //Escribir "La matriz no es mágica"
+            bandera = false;
+        }
+
+        int sumaDiagonalB = 0;
+        for (int i = 0; i < matriz.length; i++) {
+            sumaDiagonalB += matriz[i][matriz.length - 1];
+        }
+        if (sumaDiagonalB != suma) {
+            //Escribir "La matriz no es mágica" 
+            bandera = false;
+        }
+
+        if (bandera) {
+            System.out.println("La matriz es mágica, la suma de filas, columnas y diagonales es: " + suma);
+        } else {
+            System.out.println("La matriz no es mágica");
+        }
+
+    }
+
+    public static void ejercicio21() {
+        /*Dadas dos matrices cuadradas de números enteros, la matriz M de 10x10 y la matriz P de 
+3x3, se solicita escribir un programa en el cual se compruebe si la matriz P está contenida 
+dentro de la matriz M. Para ello se debe verificar si entre todas las submatrices de 3x3 que 
+se pueden formar en la matriz M, desplazándose por filas o columnas, existe al menos una 
+que coincida con la matriz P. En ese caso, el programa debe indicar la fila y la columna de 
+la matriz M en la cual empieza el primer elemento de la submatriz P.*/
+
+        int[][] matrizM = new int[10][10];
+        int[][] matrizP = new int[3][3];
+
+        //Rellenar matriz M
+        for (int i = 0; i < matrizM.length; i++) {
+            for (int j = 0; j < matrizM.length; j++) {
+                matrizM[i][j] = (int) (Math.random() * 100);
+            }
+        }
+
+        //Rellenar matriz P
+        for (int i = 0; i < matrizP.length; i++) {
+            for (int j = 0; j < matrizP.length; j++) {
+                matrizP[i][j] = (int) (Math.random() * 100);
+            }
+        }
+
+        //Mostrar matriz M
+        for (int i = 0; i < matrizM.length; i++) {
+            for (int j = 0; j < matrizM.length; j++) {
+                System.out.print(matrizM[i][j] + " ");
+            }
+            System.out.println("");
+        }
+        System.out.println("");
+
+        //Mostrar matriz P
+        for (int i = 0; i < matrizP.length; i++) {
+            for (int j = 0; j < matrizP.length; j++) {
+                System.out.print(matrizP[i][j] + " ");
+            }
+            System.out.println("");
+        }
+        System.out.println("");
+
+        //Comprobar si P está en M
+        boolean encontrada = false;
+        for (int i = 0; i <= matrizM.length - matrizP.length; i++) {
+            for (int j = 0; j <= matrizM[i].length - matrizP[0].length; j++) {
+                boolean coinciden = true;
+                for (int k = 0; k < matrizP.length; k++) {
+                    for (int l = 0; l < matrizP[0].length; l++) {
+                        if (matrizP[k][l] != matrizM[i + k][j + l]) {
+                            coinciden = false;
+                            break;
+                        }
+                    }
+                    if (!coinciden) {
+                        break;
+                    }
+                }
+                if (coinciden) {
+                    System.out.println("Coincidencia en posición: " + i + "," + j);
+                    encontrada = true;
+                    break;
+                }
+            }
+            if (encontrada) {
+                break;
+            }
+        }
+
+        if (!encontrada) {
+            System.out.println("La matriz P no está contenida en la matriz M.");
+        }
+
     }
 
 }
